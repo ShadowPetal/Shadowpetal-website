@@ -1,0 +1,139 @@
+/* Using CSS variables for easy color management */
+:root {
+    --bg-color: #000000; /* CHANGED: Pure black background */
+    --neon-purple: #e02bff;
+    --neon-cyan: #00f6ff;
+    --text-color: #e0e0e0;
+}
+
+/* Basic Reset and Font Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; 
+}
+
+/* The Splash Screen that shows the logo first */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+#splash-screen img {
+    max-width: 500px; /* CHANGED: Much bigger logo */
+    width: 90%;
+    height: auto;
+    /* NEW: Make the logo appear as white/grayscale on the black background */
+    filter: grayscale(100%) brightness(1.8);
+}
+
+/* This class will be added by JavaScript to hide the splash screen */
+#splash-screen.hidden {
+    opacity: 0;
+    transform: translateY(-50px);
+    pointer-events: none;
+}
+
+/* Main Content Area */
+#main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    
+    /* Animation to fade in the main content */
+    opacity: 0; 
+    animation: fadeIn 1.5s ease-in-out forwards;
+    animation-delay: 1.5s; 
+}
+
+.content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The Cat Animation Styling */
+.cat-animation {
+    max-width: 350px; 
+    width: 90%;
+    height: auto;
+    margin-bottom: 2rem;
+    border-radius: 15px;
+    /* REMOVED shadow from base style, will be added with a class */
+    transition: box-shadow 1.5s ease-out; /* ADDED: Transition for the glow */
+}
+
+/* Company Name Styling - initially colorless */
+.company-name {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--text-color); /* CHANGED: Starts as plain text color */
+    /* REMOVED text-shadow from base style */
+    margin-bottom: 0.5rem;
+    transition: color 1.5s ease-out, text-shadow 1.5s ease-out; /* ADDED: Transition for color */
+}
+
+.company-description {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+/* --- NEW SECTION: Styles for when colors are active --- */
+/* This class will be added via JS to fade in the neon colors */
+
+#main-content.colors-active .cat-animation {
+    box-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+}
+
+#main-content.colors-active .company-name {
+    color: var(--neon-purple);
+    text-shadow: 0 0 5px var(--neon-purple), 0 0 15px var(--neon-purple);
+}
+/* --- END NEW SECTION --- */
+
+
+/* Simple Footer */
+footer {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Keyframe Animation for Fading In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
